@@ -1,0 +1,16 @@
+.pageTitle-flex-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+}
+.pageTitle-grid-container {
+  display: grid;
+  grid-template: 1fr 1fr/1fr 1fr;
+  gap: 20px;
+  padding: 20%;
+}
+
+
+
