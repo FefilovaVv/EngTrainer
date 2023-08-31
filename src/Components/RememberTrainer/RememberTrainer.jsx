@@ -67,7 +67,7 @@ function RememberTrainer(props) {
   return (
     <>
       {pageState}
-      <MyButton onClick={() => console.log(wordsArray)}>f</MyButton>
+     
     </>
   );
 }

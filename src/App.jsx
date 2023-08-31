@@ -24,11 +24,13 @@ function App() {
       console.log("vocabulary");
       break;
     case "rememberOrNot":
-      setPage((currentPage) => (currentPage = <RememberTrainer page={page} />));
+      setPage((currentPage) => (currentPage = <RememberTrainer />));
       break;
   }
 
-  return <>{page}</>;
+  return <>
+  <RememberTrainer />{page}
+  </>;
 }
 
 export default App;

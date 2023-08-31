@@ -22,7 +22,7 @@ function Results(props) {
                     <p className={classes.word}>{word.word}</p>
                     <p
                       className={classes.isThoughtBack}
-                    >{`${word.isThoughtBack}`}</p>
+                    >{`${word.isThoughtBack===true?'помню':'не помню'}`}</p>
                   </div>
                 </>
               );
