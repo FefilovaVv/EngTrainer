@@ -11,7 +11,7 @@ function Results(props) {
       <div className={classes.mainFlexContainer}>
         <h2 className={classes.title}>Помню/не помню</h2>
 
-        <div className={classes.trainerGridContainer}>
+        <div >
           <h2 className={classes.guessWord}>Результаты</h2>
           <div className={classes.flexContainerResults}>
             {props.wordsArray.slice(0, 4).map((word) => {
@@ -22,14 +22,15 @@ function Results(props) {
                     <p className={classes.word}>{word.word}</p>
                     <p
                       className={classes.isThoughtBack}
-                    >{`${word.isThoughtBack===true?'помню':'не помню'}`}</p>
+                    >{`${word.isThoughtBack===true?'Помню':'Не помню'}`}</p>
                   </div>
                 </>
               );
             })}
           </div>
           <div className={classes.flexContainerBtns}>
-            <MyButton>Еще раз</MyButton>
+            <MyButton onClick={()=> {props.setPageState('trainer')
+          props.setCurrentWordIndex(0)}}>Еще раз</MyButton>
             <MyButton>Другая тренировка</MyButton>
           </div>
         </div>

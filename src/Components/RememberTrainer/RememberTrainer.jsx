@@ -60,16 +60,13 @@ function RememberTrainer(props) {
       break;
     case "results":
       setPageState(
-        (currentPage) => (currentPage = <Results wordsArray={wordsArray} />)
+        (currentPage) => (currentPage = <Results wordsArray={wordsArray}
+          setPageState={setPageState} 
+          setCurrentWordIndex={setCurrentWordIndex}/>)
       );
       break;
   }
-  return (
-    <>
-      {pageState}
-     
-    </>
-  );
+  return <>{pageState}</>;
 }
 
 export default RememberTrainer;

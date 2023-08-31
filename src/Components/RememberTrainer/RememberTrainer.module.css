@@ -17,6 +17,14 @@
   width: 200px;
 }
 
+.trainerGridContainer {
+  display: grid;
+  grid-template: 1fr 1fr/1fr 1fr;
+  column-gap: 20px;
+  row-gap: 50px;
+  padding: 20px;
+}
+
 .guessWord {
     text-align: center;
     grid-area: 1/1/3/3;
@@ -28,6 +36,13 @@
   
   flex-direction: column;
   grid-area: 1/1/3/3;
+}
+.trainerGridContainer {
+    display: grid;
+    grid-template: 1fr 1fr/1fr 1fr;
+    column-gap: 20px;
+    row-gap: 50px;
+    padding: 20px;
 }
 .flexContainerOneResult{
   display: flex;

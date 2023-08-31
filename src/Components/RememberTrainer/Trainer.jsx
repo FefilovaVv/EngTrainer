@@ -25,7 +25,8 @@ function Trainer(props) {
           <MyButton onClick={() => props.handleIsThoughtBack(true)}>
             Помню
           </MyButton>
-          <MyButton onClick={() => props.handleIsThoughtBack(false)}>
+          <MyButton onClick={() => {props.handleIsThoughtBack(false)
+          }}>
             Не помню
           </MyButton>
         </div>
