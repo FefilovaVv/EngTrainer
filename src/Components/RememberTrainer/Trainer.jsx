@@ -5,6 +5,7 @@ import animalsData from "./Words/animals_eng.txt";
 import { produce } from "immer";
 
 function Trainer(props) {
+  const [mode, setMode] = useState("rus");
   return (
     <>
       <div className={classes.mainFlexContainer}>
@@ -12,7 +13,8 @@ function Trainer(props) {
 
         <div className={classes.modesFlexContainer}>
           <p>Выбери свой режим</p>
-          <select name="mode" id="mode">
+          <select name="mode" id="mode" onChange={(event)=>props.handleChangeMode(event.target.value)
+}>
             <option value="eng">eng</option>
             <option value="rus">rus</option>
           </select>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import classes from "./RememberTrainer.module.css";
 import MyButton from "../UI/MyButton/MyButton";
-import animalsData from "./Words/animals_eng.txt";
+import animalsDataEng from "./Words/animals_eng.txt";
+import animalsDataRus from "./Words/animals_rus.txt";
 import { produce } from "immer";
 import Trainer from "./Trainer";
 import Results from "./Results";
@@ -12,9 +13,11 @@ function RememberTrainer(props) {
   ]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [pageState, setPageState] = useState("trainer");
+  const [mode, setMode] = useState("eng");
+
 
   useEffect(() => {
-    fetch(animalsData)
+    fetch(mode==='eng'?animalsDataEng:animalsDataRus)
       .then((response) => response.text())
       .then((content) => {
         const animalsArray = content.split("\n");
@@ -31,7 +34,7 @@ function RememberTrainer(props) {
         console.log(wordsArray);
         setPageState("trainer");
       });
-  }, []);
+  }, [mode]);
 
   const handleIsThoughtBack = (isThoughtBack) => {
     if (currentWordIndex === 3) return setPageState("results");
@@ -42,8 +45,10 @@ function RememberTrainer(props) {
       })
     );
     setPageState("trainer");
-    console.log(currentWordIndex, isThoughtBack);
+    // console.log(currentWordIndex, isThoughtBack);
   };
+  const handleChangeMode=(newMode)=>{setMode(newMode)
+  console.log(mode)}
 
   switch (pageState) {
     case "trainer":
@@ -54,6 +59,8 @@ function RememberTrainer(props) {
               wordsArray={wordsArray}
               currentWordIndex={currentWordIndex}
               handleIsThoughtBack={handleIsThoughtBack}
+              mode={mode}
+              handleChangeMode={handleChangeMode}
             />
           ))
       );
