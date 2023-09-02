@@ -8,7 +8,7 @@ function ChooseMode(props) {
         <select
           name="mode"
           id="mode"
-          onChange={(event) => props.handleChangeMode(event.target.value)}
+          onChange={(event) => props.onModeChange(event.target.value)}
         >
           <option value="режим">Режим</option>
 

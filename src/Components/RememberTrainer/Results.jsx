@@ -9,7 +9,7 @@ function Results(props) {
       <div>
         <h2 className={classes.guessWord}>Результаты</h2>
         <div className={classes.flexContainerResults}>
-          {props.wordsArray.slice(0, 4).map((word) => {
+          {props.words.slice(0, 4).map((word) => {
             return (
               <>
                 <div key={word.id} className={classes.flexContainerOneResult}>

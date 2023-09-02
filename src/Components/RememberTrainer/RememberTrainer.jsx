@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import classes from "./RememberTrainer.module.css";
+import { produce } from "immer";
 import animalsDataEng from "./Words/animals_eng.txt";
 import animalsDataRus from "./Words/animals_rus.txt";
-import { produce } from "immer";
 import Trainer from "./Trainer";
 import Results from "./Results";
 import ChooseMode from "./ChooseMode";
+import classes from "./RememberTrainer.module.css";
 
 function RememberTrainer(props) {
   const [wordsArray, setWordsArray] = useState([
@@ -15,13 +15,14 @@ function RememberTrainer(props) {
   const [pageState, setPageState] = useState("mode");
   const [mode, setMode] = useState("режим");
 
-  useEffect(() => {
-    mode === "eng" || "rus" ? null : console.log(error);
-  }, [mode]);
-
   const handleIsThoughtBack = (isThoughtBack) => {
-    if (currentWordIndex === 3) return setPageState("results");
-    setCurrentWordIndex(currentWordIndex + 1);
+    if (currentWordIndex === 3) {
+      setPageState("results");
+  
+      return;
+    }
+
+    setCurrentWordIndex(index => index + 1);
     setWordsArray((currentWordsArray) =>
       produce(currentWordsArray, (draft) => {
         draft[currentWordIndex].isThoughtBack = isThoughtBack;
@@ -31,72 +32,56 @@ function RememberTrainer(props) {
   };
 
   const handleChangeMode = (newMode) => {
-    fetch(mode === "eng" ? animalsDataEng : animalsDataRus)
+    fetch(newMode === "eng" ? animalsDataEng : animalsDataRus)
       .then((response) => response.text())
       .then((content) => {
         const animalsArray = content.split("\n");
+
         setWordsArray(
-          animalsArray.map((animal) => ({
-            id: Math.random(),
-            word: animal,
-            isThoughtBack: false,
-          }))
+          animalsArray
+            .map((animal) => ({
+              id: Math.random(),
+              word: animal,
+              isThoughtBack: false,
+            }))
+            .sort((a, b) => a.id - b.id)
         );
-        setWordsArray((currentArray) =>
-          currentArray.sort((a, b) => a.id - b.id)
-        );
+        setMode(newMode);
+        setCurrentWordIndex(0);
+        setPageState("trainer");
       });
-    setMode(newMode);
-    setCurrentWordIndex(0);
-    setPageState("trainer");
   };
 
-  switch (pageState) {
-    case "trainer":
-      setPageState(
-        (currentPage) =>
-          (currentPage = (
-            <Trainer
-              wordsArray={wordsArray}
-              currentWordIndex={currentWordIndex}
-              handleIsThoughtBack={handleIsThoughtBack}
-              mode={mode}
-              handleChangeMode={handleChangeMode}
-            />
-          ))
-      );
-      break;
-    case "results":
-      setPageState(
-        (currentPage) =>
-          (currentPage = (
-            <Results
-              wordsArray={wordsArray}
-              setPageState={setPageState}
-              setCurrentWordIndex={setCurrentWordIndex}
-              mode={mode}
-            />
-          ))
-      );
-      break;
-    case "mode":
-      setPageState(
-        (currentPage) =>
-          (currentPage = (
-            <ChooseMode
-              wordsArray={wordsArray}
-              setCurrentWordIndex={setCurrentWordIndex}
-              handleChangeMode={handleChangeMode}
-            />
-          ))
-      );
-      break;
-  }
+  const getPageContent = () => {
+    switch (pageState) {
+      case "trainer":
+        return (
+          <Trainer
+            wordsArray={wordsArray}
+            currentWordIndex={currentWordIndex}
+            handleIsThoughtBack={handleIsThoughtBack}
+            mode={mode}
+            handleChangeMode={handleChangeMode}
+          />
+        );
+      case "results":
+        return (
+          <Results
+            words={wordsArray}
+            setPageState={setPageState}
+            setCurrentWordIndex={setCurrentWordIndex}
+            mode={mode}
+          />
+        );
+      case "mode":
+        return <ChooseMode onModeChange={handleChangeMode} />;
+    }
+  };
   return (
     <>
       <div className={classes.mainFlexContainer}>
         <h2 className={classes.title}>Помню/не помню</h2>
-        {pageState}
+        {getPageContent()}
       </div>
     </>
   );

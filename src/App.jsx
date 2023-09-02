@@ -3,6 +3,8 @@ import "./App.css";
 import ChooseTrainer from "./Components/ChooseTrainer";
 import MainPage from "./Components/MainPage";
 import RememberTrainer from "./Components/RememberTrainer/RememberTrainer";
+// import Test from "./Components/test/test";
+
 
 function App() {
   const handleChangePage = (pageName) => {
@@ -29,6 +31,7 @@ function App() {
   }
 
   return <>
+  {/* <Test/> */}
   <RememberTrainer />
  {page}
   </>;
